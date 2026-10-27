@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse the October 27 Enjoei and OLX pilot: captured used-game search cards, prices and verification gaps.">
+  <title>Enjoei + OLX · Game Weekly Deals</title>
+  <link rel="stylesheet" href="view.css">
+  <script type="module" src="view.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#results">Skip to listings</a>
+  <header>
+    <nav aria-label="Project navigation"><a href="../../../">Game Weekly Deals</a><a href="../../../crawl/processed/">Mercado Livre shortlist ↗</a></nav>
+    <p class="eyebrow">27 OCTOBER 2026 · PUBLIC CAPTURE PILOT</p>
+    <h1>Two more places<br>to find a good disc.</h1>
+    <p class="lede">Enjoei + OLX search snapshots. Browse the evidence, then check the actual copy. These are leads, not purchase recommendations.</p>
+  </header>
+  <main>
+    <section class="stats" aria-label="Capture summary">
+      <div><strong id="unique-count">—</strong><span>distinct listing IDs</span></div>
+      <div><strong id="observation-count">—</strong><span>captured cards</span></div>
+      <div><strong>3</strong><span>result pages sampled</span></div>
+      <div><strong>R$70</strong><span>sticker-price search cap</span></div>
+    </section>
+    <p class="notice"><strong>Shipping is not verified.</strong> The buying budget is R$70 delivered, but these filters cap only the item price. Free-shipping badges are not destination-specific quotes.</p>
+    <details class="scope">
+      <summary>What was captured, and what wasn’t?</summary>
+      <p>Nationwide used-game searches: two Enjoei pages (60 regular cards + 10 seller highlights) and OLX page 1 (50 cards). Sorted by marketplace relevance, not a complete market crawl.</p>
+      <p>All cards are retained, including bundles, online-dependent games and ambiguous offers. Search filters do not establish physical format, authenticity, copy condition or availability. No product-detail or checkout verification was performed.</p>
+      <p>By default, the repeated Enjoei listing is shown once with its occurrence count. Seller-highlight placement is labelled; OLX promotion status is unknown. Times are capture times, not price guarantees.</p>
+      <p><a href="https://github.com/fczuardi/game-weekly-deals/blob/main/research/pilots/2026-10-27/README.md">Full methodology and JSON files on GitHub ↗</a></p>
+    </details>
+    <form id="filters" class="filters" aria-label="Filter captured listings">
+      <label class="search">Search title<input id="query" type="search" placeholder="e.g. Nioh, Ratchet…" autocomplete="off"></label>
+      <label>Marketplace<select id="source"><option value="">Both sources</option><option value="enjoei">Enjoei</option><option value="olx">OLX</option></select></label>
+      <label>Sort<select id="sort"><option value="price-asc">Lowest item price</option><option value="price-desc">Highest item price</option><option value="title">Title A–Z</option><option value="capture">Capture order</option></select></label>
+      <label class="check"><input id="unique" type="checkbox" checked> One card per listing ID</label>
+      <button type="button" id="reset">Reset filters</button>
+    </form>
+    <p id="status" role="status" aria-live="polite">Loading three capture files…</p>
+    <section id="results" class="results" aria-label="Captured listings" tabindex="-1"></section>
+    <noscript><p>Enable JavaScript to filter these captures, or browse the <a href="enjoei-page-1.json">first Enjoei JSON</a>, <a href="enjoei-page-2.json">second Enjoei JSON</a> and <a href="olx-page-1.json">OLX JSON</a>.</p></noscript>
+  </main>
+  <footer>Frozen research snapshot · No live prices, affiliate links or purchase actions. <a href="../../../crawl/processed/">Back to Mercado Livre triage</a></footer>
+</body>
+</html>
