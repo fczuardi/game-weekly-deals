@@ -26,3 +26,17 @@ There are 120 card observations / 119 unique source-scoped IDs in this snapshot.
 
 These files intentionally live outside `crawl/`: the existing Mercado Livre importer scans JSON below that tree. They are **not yet wired into the shortlist HTML view**, and existing ML data/importers are unchanged.
 
+
+## Browse this pilot
+
+Open `index.html` through an HTTP server or GitHub Pages for title search, source filtering, price sorting and optional deduplication. The default shows 119 distinct listing IDs; switching off deduplication shows all 120 captured cards. Each card links to the original listing and preserves its shipping uncertainty and capture evidence. This is a standalone pilot view, not a merge into the Mercado Livre ranking pipeline.
+
+Local checks (Node.js):
+
+```sh
+node test-view.mjs
+node test-render.mjs
+node --check view.mjs
+```
+
+These cover data transformations and rendering behavior, not browser layout.
