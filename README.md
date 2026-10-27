@@ -11,6 +11,10 @@ python3 -m http.server 8000
 # Open http://localhost:8000
 node scripts/validate.mjs
 node scripts/test-render.mjs
+node scripts/test-mercado-livre-exporter.mjs
+node scripts/build-crawl-index.mjs
+node scripts/rank-crawl-shortlist.mjs
+node scripts/test-rank-crawl-shortlist.mjs
 ```
 
 Serve over HTTP; opening `index.html` as a local file can block JSON loading. The files are compatible with GitHub Pages, but this version does not enable Pages or deploy anything.
@@ -22,6 +26,20 @@ Serve over HTTP; opening `index.html` as a local file can block JSON loading. Th
 - `data/weeks.json`: weekly progress and decisions, referencing observation IDs.
 - `scripts/validate.mjs`: data, references, amounts, URL, winner and basic privacy checks.
 - `scripts/test-render.mjs`: dependency-free DOM smoke test, including one observation reused across multiple weeks. This is not a visual or browser test.
+- `userscripts/mercado-livre-search-export.user.js`: manually exports the Mercado Livre search results visible in your browser as normalized JSON.
+- `scripts/test-mercado-livre-exporter.mjs`: dependency-free tests for Mercado Livre price, ID, platform and URL extraction.
+- `scripts/build-crawl-index.mjs`: audits all JSON snapshots under `crawl/`, merges repeated identity keys, and writes a sorted JSON index, CSV and coverage report to `crawl/processed/`.
+- `scripts/rank-crawl-shortlist.mjs`: filters and groups the generated index, compares prices within likely game/platform groups, and writes a heuristic shortlist beside the index.
+
+## Export Mercado Livre search results
+
+Install `userscripts/mercado-livre-search-export.user.js` in ScriptCat, Tampermonkey or another userscript manager. Open a Mercado Livre search page normally and wait for its results to load. Click **Exportar resultados (JSON)** to stay on the page, or **Exportar + próxima página** to download the current snapshot and then follow Mercado Livre's normal next-page link. The latter remains a human-initiated action for every page; it does not crawl a batch in the background. The script reads the rendered page only, and does not make requests, bypass challenges or interact with your account.
+
+The downloaded filename includes the price range encoded in the search path and the detected results-page number, for example `mercadolivre-2026-10-27-price-0-25-page-2-48-listings.json`. Searches without that path filter use `price-any`. The snapshot includes the parsed range, search URL and time plus each regular result's title, price in integer centavos, condition, seller when displayed, shipping label, inferred PlayStation platform, catalog product ID and exact seller-listing ID. Sponsored carousel cards are deliberately excluded. Review the JSON before committing or uploading it because search URLs and rendered text can vary by account and location.
+
+After placing snapshots anywhere below `crawl/`, run `node scripts/build-crawl-index.mjs`. The generated CSV is sorted by price, platform and title for quick inspection. The JSON retains every source sighting and is the better input for an agent. The audit report identifies duplicate pages, missing pages and batches that may be incomplete. When an export lacks an exact `MLB…` seller-listing ID, the builder labels its identity as `catalog_product`; this is useful for grouping but must not be interpreted as proof that two used-game offers are the same physical copy.
+
+Run `node scripts/rank-crawl-shortlist.mjs` after rebuilding the index. It requires a used condition, an item price within the R$70 ceiling and at least two comparable normalized titles. Listings without confirmed free shipping remain eligible and state the maximum shipping charge that would keep the purchase within budget. Obvious accessories, digital/account products, reproductions, lots and online-only titles are mechanically excluded. The ranking is only triage: it does not establish authenticity, exact-copy condition, checkout total, seller quality, edition equivalence, rarity, review quality or whether a game suits the collection.
 
 ## Update a research observation
 

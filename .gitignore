@@ -1,2 +1,5 @@
-review/
-__pycache__/
+# Browser-assisted crawl snapshots are local inputs. Keep derived reports and
+# indexes tracked so remote agents can inspect the processed evidence.
+crawl/*
+!crawl/processed/
+!crawl/processed/**
