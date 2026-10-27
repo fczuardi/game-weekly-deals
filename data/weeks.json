@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "weeks": [
+    {
+      "id": "2026-10-30",
+      "milestoneOn": "2026-10-30",
+      "status": "researching",
+      "winnerObservationId": null,
+      "observationIds": ["2026-10-27-everybodys-golf-nova-era"],
+      "reason": "First experiment in progress. One delivered-price quote fits the ceiling, but condition, final checkout total and preservation checks remain open. No winner selected."
+    }
+  ]
+}

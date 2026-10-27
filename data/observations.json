@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "currency": "BRL",
+  "shippingDestination": "São Carlos/SP",
+  "budgetCents": 7000,
+  "observations": [
+    {
+      "id": "2026-10-27-everybodys-golf-nova-era",
+      "observedOn": "2026-10-27",
+      "gameId": "everybodys-golf-ps4-standard",
+      "title": "Everybody’s Golf",
+      "platform": "PS4",
+      "edition": "Standard edition — regional pressing unverified",
+      "listingId": "nova-era-everybodys-golf-2025-06-21-13-51-09",
+      "seller": "Nova Era Games",
+      "listingUrl": "https://www.lojanovaera.com/everybodys-golf-ps4-midia-fisica-usado-2025-06-21-13-51-09",
+      "condition": "Used; exact disc condition and case completeness unverified",
+      "availability": "Listed in stock at observation time",
+      "paymentMethod": "Pix",
+      "itemCents": 2990,
+      "shippingCents": 2824,
+      "mandatoryFeesCents": null,
+      "quotedTotalCents": 5814,
+      "shippingMethod": "PAC",
+      "deliveryNote": "Product page quotes 8 business days; store policy allows up to 5 business days for dispatch.",
+      "verification": "product_page_quote",
+      "status": "candidate",
+      "summary": "An approachable arcade-golf candidate, not a rarity claim or a buy-now recommendation.",
+      "caveats": [
+        "Photos are illustrative. The exact copy, disc condition and included case have not been confirmed.",
+        "Product-page shipping quote only. Checkout and any additional mandatory fees have not been verified.",
+        "Online services closed in September 2022. Offline play remains available; unpatched disc completeness has not been verified.",
+        "The store mentions warranty stickers on used products. Placement on this copy is unverified.",
+        "Exact-edition console and firmware compatibility has not been verified."
+      ],
+      "rating": {"score": 78, "scale": 100, "label": "Metacritic · PS4", "url": "https://www.metacritic.com/game/everybodys-golf/critic-reviews/?platform=playstation-4"},
+      "sources": [
+        {"label": "Sony: game and offline play", "url": "https://www.playstation.com/en-us/games/everybodys-golf/"},
+        {"label": "Online-service shutdown report", "url": "https://www.pushsquare.com/news/2022/03/everybodys-golf-falls-victim-to-sony-online-server-cuts"},
+        {"label": "Store sales and warranty policy", "url": "https://www.lojanovaera.com/pagina/politica-de-vendas-trocas-e-devolucoes.html"}
+      ]
+    }
+  ]
+}

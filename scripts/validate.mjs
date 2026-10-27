@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const read = path => JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
+const data=read('data/observations.json'),weekly=read('data/weeks.json');
+assert.equal(data.schemaVersion,1);assert.equal(weekly.schemaVersion,1);assert.equal(data.currency,'BRL');assert.equal(data.budgetCents,7000);assert.equal(data.shippingDestination,'São Carlos/SP');
+const ids=new Set();const iso=/^\d{4}-\d{2}-\d{2}$/;const cents=n=>Number.isInteger(n)&&n>=0;
+const safeUrl=url=>assert.equal(new URL(url).protocol,'https:');
+for(const o of data.observations){assert(!ids.has(o.id),'Duplicate observation');ids.add(o.id);assert(iso.test(o.observedOn));for(const field of ['title','gameId','listingId','platform','edition','seller','condition','availability'])assert.equal(typeof o[field],'string');assert(cents(o.itemCents)&&cents(o.shippingCents));assert(o.mandatoryFeesCents===null||cents(o.mandatoryFeesCents));assert.equal(o.quotedTotalCents,o.itemCents+o.shippingCents+(o.mandatoryFeesCents??0));assert(['product_page_quote','checkout_verified'].includes(o.verification));assert(['candidate','rejected'].includes(o.status));if(o.verification==='checkout_verified')assert.notEqual(o.mandatoryFeesCents,null);safeUrl(o.listingUrl);safeUrl(o.rating.url);o.sources.forEach(s=>safeUrl(s.url));assert(o.caveats.length>0);}
+const weeks=new Set();for(const w of weekly.weeks){assert(!weeks.has(w.id));weeks.add(w.id);assert(iso.test(w.milestoneOn));assert.equal(new Date(w.milestoneOn+'T12:00:00Z').getUTCDay(),5,'Milestone must be Friday');assert(['researching','selected','skipped'].includes(w.status));w.observationIds.forEach(id=>assert(ids.has(id),'Unknown observation'));if(w.status==='selected'){const o=data.observations.find(o=>o.id===w.winnerObservationId);assert(o);assert(w.observationIds.includes(o.id));assert.equal(o.verification,'checkout_verified');assert(o.quotedTotalCents<=data.budgetCents)}else assert.equal(w.winnerObservationId,null);}
+const serialized=JSON.stringify([data,weekly]);assert(!/\b\d{5}-\d{3}\b/.test(serialized),'Do not publish exact postal codes');assert(!/jailbreak/i.test(serialized),'Private console or destination detail');
+console.log(`Validated ${ids.size} observation(s), ${weeks.size} week(s); totals, IDs, URLs, winner rules, privacy.`);
