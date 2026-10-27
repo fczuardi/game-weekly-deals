@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "groups": [
+    {
+      "gameKey": "PS3:sports-champions",
+      "platform": "PS3",
+      "aliases": [
+        "Sports Champions",
+        "Sports Champions PS Move",
+        "Sports Champions Move",
+        "Sports Champions do",
+        "Sports Champions tudo 100 J899"
+      ]
+    },
+    {
+      "gameKey": "PS3:medieval-moves-deadmunds-quest",
+      "platform": "PS3",
+      "aliases": [
+        "Medieval Moves",
+        "Medieval Moves Deadmund's Quest",
+        "Medieval Moves (PS Move) Campinas",
+        "Medieval Moves (PS Move) Loja Campinas"
+      ]
+    }
+  ]
+}

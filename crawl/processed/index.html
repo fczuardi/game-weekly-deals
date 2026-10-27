@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive preview of processed Mercado Livre physical game candidates.">
+  <title>Deal Triage — Mercado Livre Crawl</title>
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">GAME WEEKLY DEALS · CRAWL PREVIEW</p>
+      <h1>Deal triage,<br><em>with the uncertainty visible.</em></h1>
+      <p class="lede">A sortable field notebook for used physical PlayStation listings. Price comparisons are leads—not purchase recommendations.</p>
+    </div>
+    <div class="hero-mark" aria-hidden="true"><span>R$</span><strong>70</strong><small>delivered ceiling</small></div>
+  </header>
+
+  <main>
+    <section class="stats" aria-label="Crawl summary">
+      <article><strong id="stat-indexed">—</strong><span>indexed keys</span></article>
+      <article><strong id="stat-eligible">—</strong><span>eligible listings</span></article>
+      <article><strong id="stat-groups">—</strong><span>comparable groups</span></article>
+      <article><strong id="stat-shipping">—</strong><span>shipping to verify</span></article>
+    </section>
+
+    <section class="controls" aria-label="Candidate filters">
+      <label class="search-field">
+        <span>Search title</span>
+        <input id="search" type="search" placeholder="e.g. Mass Effect, PS4…" autocomplete="off">
+      </label>
+      <label><span>Platform</span><select id="platform"><option value="">All platforms</option></select></label>
+      <label><span>Shipping</span><select id="shipping"><option value="">All shipping states</option><option value="free_shown">Free shown</option><option value="unknown_requires_verification">Needs verification</option></select></label>
+      <label><span>Sort by</span><select id="sort"><option value="rank">Heuristic rank</option><option value="price">Lowest price</option><option value="discount">Largest discount</option><option value="comparables">Most comparables</option><option value="headroom">Most budget headroom</option></select></label>
+      <label class="check"><input id="clean-only" type="checkbox"><span>Hide flagged titles</span></label>
+    </section>
+
+    <div class="results-heading">
+      <div><p class="eyebrow">SHORTLIST</p><h2><span id="visible-count">0</span> candidates</h2></div>
+      <p id="capture-date" class="capture-date"></p>
+    </div>
+
+    <section id="candidate-list" class="candidate-list" aria-live="polite"></section>
+    <p id="empty" class="empty" hidden>No candidates match these filters.</p>
+    <p id="error" class="error" hidden>Could not load the processed shortlist. Serve the repository over HTTP instead of opening this file directly.</p>
+  </main>
+
+  <footer>
+    <p><strong>Before buying:</strong> verify the exact seller offer, photos, authenticity, completeness, current price, checkout shipping, and online dependencies.</p>
+    <a href="SHORTLIST.md">Read methodology →</a>
+  </footer>
+  <script src="preview.js" defer></script>
+</body>
+</html>
