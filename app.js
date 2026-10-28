@@ -22,7 +22,7 @@ function renderHistory(observations, selected){
  const grouped=new Map();rows.forEach(o=>grouped.set(o.listingId,(grouped.get(o.listingId)||0)+1));const repeat=[...grouped.values()].some(n=>n>1);root.append(element('p',repeat?'Repeated observations are available. Compare only rows with the same original listing, and check for condition or shipping changes.':'Only one observation per listing so far. There is no measured price trend yet.','history-note'));
 }
 async function start(){
- const [data,weekly]=await Promise.all(['data/observations.json','data/weeks.json'].map(async url=>{const r=await fetch(url);if(!r.ok)throw new Error('Data unavailable');return r.json()}));
+ const [data,weekly]=await Promise.all(['data/observations.json','data/weeks.json'].map(async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('Data unavailable');return r.json()}));
  if(!Array.isArray(data.observations)||!Array.isArray(weekly.weeks))throw new Error('Invalid data');const observations=data.observations;const weeks=[...weekly.weeks].sort((a,b)=>b.milestoneOn.localeCompare(a.milestoneOn));const current=weeks[0];
  const content=document.querySelector('#current-content');content.replaceChildren();if(current){document.querySelector('#current-date').textContent='Friday milestone · '+date(current.milestoneOn);const note=element('div',undefined,'week-note');note.append(pill(current.status==='researching'?'RESEARCH IN PROGRESS':current.status==='skipped'?'SKIP THIS WEEK':'WEEKLY PICK'),element('p',current.reason));content.append(note);current.observationIds.map(id=>observations.find(o=>o.id===id)).filter(Boolean).forEach(o=>content.append(renderCard(o)))}else content.append(element('p','No weekly research has been recorded yet.'));
  const archive=document.querySelector('#archive-content');archive.replaceChildren();weeks.forEach(w=>{const entry=element('article',undefined,'archive-item');const time=element('time',date(w.milestoneOn));time.dateTime=w.milestoneOn;const desc=element('div');desc.append(pill(w.status==='researching'?'PENDING — NO WINNER':w.status==='skipped'?'SKIPPED':'WINNER SELECTED'),element('p',w.reason));w.observationIds.forEach(id=>{const o=observations.find(x=>x.id===id);if(o){const p=element('p');p.append(link(o.title,'#observation-'+(w.id===current?.id?'current':w.id)+'-'+id));desc.append(p);if(w.id!==current?.id){const detail=element('details');detail.append(element('summary','View recorded observation'),renderCard(o,w.id));desc.append(detail)}}});entry.append(time,desc);archive.append(entry)});
@@ -33,7 +33,7 @@ start().catch(error=>{console.error(error);const message=document.querySelector(
 async function renderResearchLog(){
  const root=document.querySelector('#research-log-content');if(!root)return;
  try {
-  const response=await fetch('data/research-log.json');if(!response.ok)throw new Error('Run log unavailable');
+  const response=await fetch('data/research-log.json',{cache:'no-store'});if(!response.ok)throw new Error('Run log unavailable');
   const log=await response.json();if(!Array.isArray(log.runs))throw new Error('Invalid run log');
   [...log.runs].reverse().forEach(run=>{
    const entry=element('article',undefined,'week-note');entry.append(element('h3',run.summary));
