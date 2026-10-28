@@ -11,19 +11,22 @@ python3 -m http.server 8000
 # Open http://localhost:8000
 node scripts/validate.mjs
 node scripts/test-render.mjs
+node scripts/test-interim.mjs
 node scripts/test-mercado-livre-exporter.mjs
 node scripts/build-crawl-index.mjs
 node scripts/rank-crawl-shortlist.mjs
 node scripts/test-rank-crawl-shortlist.mjs
 ```
 
-Serve over HTTP; opening `index.html` as a local file can block JSON loading. The files are compatible with GitHub Pages, but this version does not enable Pages or deploy anything.
+Serve over HTTP; opening `index.html` as a local file can block JSON loading. The site is live on [GitHub Pages](https://fczuardi.github.io/game-weekly-deals/). It serves static files; no application build is required.
 
 ## Structure
 
 - `index.html`, `style.css`, `app.js`: current research, Friday archive and price observations.
 - `data/observations.json`: append-only dated listing observations. Currency values are integer centavos.
 - `data/weeks.json`: weekly progress and decisions, referencing observation IDs.
+- `data/research-log.json`: append-only public run records: actual review time, checks, decisions, limitations and next steps. A reconciliation is not a fresh crawl.
+- `scripts/test-interim.mjs`: interim queue, provenance, log and privacy regression checks.
 - `scripts/validate.mjs`: data, references, amounts, URL, winner and basic privacy checks.
 - `scripts/test-render.mjs`: dependency-free DOM smoke test, including one observation reused across multiple weeks. This is not a visual or browser test.
 - `userscripts/mercado-livre-search-export.user.js`: manually exports the Mercado Livre search results visible in your browser as normalized JSON.
@@ -59,7 +62,7 @@ Disc-only original copies are acceptable; a missing case or manual must be label
 
 Each week is `researching`, `selected` or `skipped`. Until research is complete, keep `winnerObservationId: null`. A winner must reference a checkout-verified observation within the ceiling; validation rejects an unverified winner. Review condition, authenticity, compatibility and preservation caveats before selecting one. Link every week's candidates through `observationIds`.
 
-This first entry is **in progress**, with no winner. Everybody's Golf was quoted at R$58.14 delivered on 27 October 2026. Exact-copy condition, checkout total and unpatched disc completeness remain unverified.
+The 30 October entry is **in progress**, with no winner. The homepage now separates the 27 October captured-item-price verification queue from the original Everybody's Golf Nova Era product-page quote of R$58.14. That quote remains historical evidence, not a checkout-verified total. Exact-copy condition and unpatched disc completeness remain unverified.
 
 ## Price history is not a market index
 
@@ -71,4 +74,6 @@ Publish only “São Carlos/SP,” never an exact postal code, street address, p
 
 ## Publishing and future automation
 
-GitHub Pages can serve these static files from the root once publication is approved. This repository currently has no CI, deployment workflow or scheduled data writer. The separately scheduled weekly research is **not yet connected to repository updates**. Its output must be reviewed and appended using this schema; providing a public site does not itself establish an automated write pipeline.
+GitHub Pages is live. Standing authorization now covers daily public updates to the homepage and related research pages as evidence progresses. A separate assistant publishing task is scheduled daily for 15:00 São Paulo time, starting 29 October 2026, alongside the Friday milestone. This is not a repository cron, ingestion pipeline or guarantee of execution time/source availability. No repository scheduling or deployment configuration is added by this update.
+
+Publish actual run timestamps and distinguish new captures, rechecks and reconciliations. Append run records and price observations; do not overwrite historical prices. Record blocked sources and unchanged findings honestly. Review public-data boundaries before every commit. A successful research pass does not by itself establish a verified winner, current availability, or a checkout total.
