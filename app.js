@@ -29,3 +29,19 @@ async function start(){
  const filter=document.querySelector('#game-filter');filter.replaceChildren();const games=new Map(observations.map(o=>[o.gameId,o]));games.forEach((o,id)=>{const option=element('option',`${o.title} / ${o.platform} / ${o.edition}`);option.value=id;filter.append(option)});filter.addEventListener('change',()=>renderHistory(observations,filter.value));if(observations.length)renderHistory(observations,filter.value);else document.querySelector('#history-content').append(element('p','No observations yet.'));document.querySelector('#loading').remove();
 }
 start().catch(error=>{console.error(error);const message=document.querySelector('#loading');message.className='error';message.textContent='The research data could not be loaded. Please reload, or open the JSON files linked below.';message.append(document.createTextNode(' '),link('Observations','data/observations.json'),document.createTextNode(' · '),link('Weekly records','data/weeks.json'))});
+
+async function renderResearchLog(){
+ const root=document.querySelector('#research-log-content');if(!root)return;
+ try {
+  const response=await fetch('data/research-log.json');if(!response.ok)throw new Error('Run log unavailable');
+  const log=await response.json();if(!Array.isArray(log.runs))throw new Error('Invalid run log');
+  [...log.runs].reverse().forEach(run=>{
+   const entry=element('article',undefined,'week-note');entry.append(element('h3',run.summary));
+   const time=element('time','Reviewed '+new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Sao_Paulo'}).format(new Date(run.reviewedAt))+' · São Paulo');time.dateTime=run.reviewedAt;entry.append(time);
+   for(const [field,label] of [['checked','Checked'],['decisions','Decisions'],['limitations','Limits / blockers'],['next','Next']]){entry.append(element('h4',label));const list=element('ul');run[field].forEach(text=>list.append(element('li',text)));entry.append(list)}
+   if(run.sources){const sources=element('div',undefined,'sources');run.sources.forEach(source=>sources.append(link(source.label,source.url)));entry.append(sources)}
+   root.append(entry);
+  });
+ }catch(error){root.append(element('p','The run log could not be loaded. Read the JSON record linked below.','error'));}
+}
+renderResearchLog();
