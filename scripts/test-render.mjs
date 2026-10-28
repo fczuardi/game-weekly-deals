@@ -9,13 +9,13 @@ class Element {
  addEventListener(event,callback){this.listeners[event]=callback}
  remove(){this.removed=true}
 }
-const elements=new Map(['#current-content','#current-date','#archive-content','#game-filter','#history-content','#loading'].map(id=>[id,new Element('div')]));
+const elements=new Map(['#current-content','#current-date','#archive-content','#game-filter','#history-content','#loading','#research-log-content'].map(id=>[id,new Element('div')]));
 const document={createElement:tag=>new Element(tag),createTextNode:text=>new Element('#text',text),querySelector:id=>elements.get(id)};
 const data=JSON.parse(readFileSync(new URL('../data/observations.json',import.meta.url),'utf8'));
 const weekly=JSON.parse(readFileSync(new URL('../data/weeks.json',import.meta.url),'utf8'));
 // Same observation referenced in three weeks: IDs must remain unique.
 weekly.weeks.push({...weekly.weeks[0],id:'2026-10-23',milestoneOn:'2026-10-23'}, {...weekly.weeks[0],id:'2026-10-16',milestoneOn:'2026-10-16'});
-const errors=[];runInNewContext(readFileSync(new URL('../app.js',import.meta.url),'utf8'),{document,location:{href:'https://example.test/game-weekly-deals/'},URL,Intl,Date,Map,console:{error:e=>errors.push(e)},fetch:async url=>({ok:true,json:async()=>url.includes('observations')?data:weekly})});
+const errors=[];runInNewContext(readFileSync(new URL('../app.js',import.meta.url),'utf8'),{document,location:{href:'https://example.test/game-weekly-deals/'},URL,Intl,Date,Map,console:{error:e=>errors.push(e)},fetch:async url=>({ok:true,json:async()=>url.includes('observations')?data:url.includes('weeks')?weekly:JSON.parse(readFileSync(new URL('../data/research-log.json',import.meta.url),'utf8'))})});
 await new Promise(resolve=>setTimeout(resolve,0));
 assert.deepEqual(errors,[]);assert(elements.get('#loading').removed);
 const all=[];function walk(n){all.push(n);n.children.forEach(walk)}elements.forEach(walk);
