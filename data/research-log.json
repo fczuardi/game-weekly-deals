@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "runs": [
+    {
+      "id": "2026-10-28-initial-reconciliation",
+      "reviewedAt": "2026-10-28T19:49:00Z",
+      "captureDates": [
+        "2026-10-27"
+      ],
+      "kind": "evidence_reconciliation",
+      "summary": "Initial homepage reconciliation of existing 27 October captures; not a new crawl.",
+      "checked": [
+        "Existing ML processed rows, capture audit and manual Returnal preference.",
+        "Existing three-page Enjoei/OLX pilot and original Nova Era observation."
+      ],
+      "decisions": [
+        "Added five leads to a verification queue; no winner selected for 30 October.",
+        "Kept captured item prices separate from unverified delivery and fees.",
+        "Preserved the original R$58.14 Nova Era quote without rewriting history."
+      ],
+      "limitations": [
+        "No fresh availability, checkout, condition or ratings verification in this reconciliation.",
+        "ML identities are catalog-heavy; pilot coverage is bounded. Shipping badges do not establish a delivered total."
+      ],
+      "next": [
+        "Recheck top offer pages and shipping/fees where publicly accessible; record access blockers.",
+        "Enrich the strongest games with sourced, platform-specific ratings and preservation checks."
+      ]
+    },
+    {
+      "id": "2026-10-28-olx-guest-recheck",
+      "reviewedAt": "2026-10-28T19:51:00Z",
+      "captureDates": [
+        "2026-10-28"
+      ],
+      "kind": "public_listing_recheck",
+      "summary": "Fresh public-page recheck: two OLX leads remain R$30, with guest shipping quotes.",
+      "checked": [
+        "God of War PS4 · OLX listing 1547795286: R$30 item plus R$15.49 shipping to São Carlos/SP; quoted standard delivery 9 business days.",
+        "Horizon PS4 · OLX listing 1547794916: R$30 item plus R$15.49 guest-page shipping."
+      ],
+      "decisions": [
+        "Both known-components subtotals are R$45.49; mandatory fees and final checkout totals remain unknown. No winner selected.",
+        "God of War cover supports the 2018 release; a torn/peeled white patch is visible on packaging. Seller describes condition as excellent; disc surface was not shown.",
+        "Horizon description and photographed Spanish-language cover support Complete edition, but the actual disc/product code and included content remain unverified."
+      ],
+      "limitations": [
+        "Guest-page quotes may change; purchase buttons are not independent inventory confirmation.",
+        "No disc-condition, exact pressing, checkout-fee or preservation verification. Do not infer a combined-order or bundle price."
+      ],
+      "next": [
+        "Verify mandatory fees and exact-disc condition/content before a Friday decision.",
+        "Continue top ML offer and platform-specific ratings/preservation checks."
+      ],
+      "sources": [
+        {
+          "label": "God of War listing",
+          "url": "https://sp.olx.com.br/sao-paulo-e-regiao/games/jogos-de-video-game/god-of-war-ps4-midia-fisica-1547795286"
+        },
+        {
+          "label": "Horizon listing",
+          "url": "https://sp.olx.com.br/sao-paulo-e-regiao/games/jogos-de-video-game/horizon-zero-down-ps4-midia-fisica-1547794916"
+        }
+      ]
+    }
+  ]
+}
